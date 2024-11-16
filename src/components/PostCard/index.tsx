@@ -13,7 +13,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as sx from "./styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { addLike, isFavorite, removeLike } from "../utils";
+import { addFavorite, getLikeArray, getLikeStatus, isFavorite, removeFavorite, setLike } from "../utils";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
 type TPost = {
   body: string;
@@ -38,7 +42,9 @@ export const PostCard = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [body, setBody] = useState<string>("");
-  const [liked, setLiked] = useState<boolean>(() => isFavorite(Number(id)));
+  const [favorited, setFavorited] = useState<boolean>(() => isFavorite(Number(id)));
+  const [iconLike, setIconLike] = useState<boolean>(() => getLikeStatus(Number(id), true));
+  const [iconDislike, setIconDislike] = useState<boolean>(() => getLikeStatus(Number(id), false));
 
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
@@ -73,22 +79,42 @@ export const PostCard = () => {
     setBody("");
   };
 
+  const handleLike = (like: boolean | undefined) => {
+    setLike({postId: Number(id), like})
+
+    if (iconLike) setIconLike(false)
+
+    if (!iconLike) {
+        if (['true'].includes(String(like))) {
+          setIconLike(true)
+        }
+    }
+
+    if (iconDislike) setIconDislike(false)
+
+    if (!iconDislike) {
+      if (['false'].includes(String(like))) {
+        setIconDislike(true)
+      }
+    } 
+  }
+
   return (
     <>
       <Card sx={sx.card}>
         <CardContent sx={sx.content}>
           <Paper elevation={3} sx={sx.paper}>
-            <Typography gutterBottom variant="button">
+            <Typography gutterBottom variant="button" style={{fontWeight: '600'}}>
               Title:
             </Typography>
             <Typography>{post?.title}</Typography>
-            <Typography gutterBottom variant="button">
+            <Typography gutterBottom variant="button" style={{fontWeight: '600'}}>
               Body:
             </Typography>
             <Typography>{post?.body}</Typography>
           </Paper>
           <Paper elevation={3} sx={sx.paper}>
-            <Typography variant="button">Comments:</Typography>
+            <Typography variant="button" style={{fontWeight: '600'}}>Comments:</Typography>
             {comments.map((comment, index) => (
               <li style={sx.comment} key={comment.id}>
                 <span>{index + 1}:</span>
@@ -147,25 +173,35 @@ export const PostCard = () => {
             </Box>
           </Paper>
         </CardContent>
-        <CardActions>
-          {!liked && (
+        <CardActions sx={sx.actionButtons}>
+          {!favorited && (
             <FavoriteBorderIcon
             style={{cursor: 'pointer'}}
               onClick={() => {
-                addLike(Number(id));
-                setLiked(true);
+                addFavorite(Number(id));
+                setFavorited(true);
               }}
             />
           )}
-          {liked && (
+          {favorited && (
             <FavoriteIcon
               style={{cursor: 'pointer'}}
               onClick={() => {
-                removeLike(Number(id));
-                setLiked(false);
+                removeFavorite(Number(id));
+                setFavorited(false);
               }}
             />
           )}
+          {!iconLike && 
+          <ThumbUpOffAltIcon style={{cursor: 'pointer'}} onClick={() => handleLike(true)}/>
+          }
+          {iconLike && 
+          <ThumbUpAltIcon style={{cursor: 'pointer'}} onClick={() => handleLike(undefined)}/>
+          }
+          {!iconDislike && 
+          <ThumbDownOffAltIcon style={{cursor: 'pointer'}} onClick={() => handleLike(false)}/>}
+          {iconDislike && 
+          <ThumbDownAltIcon style={{cursor: 'pointer'}} onClick={() => handleLike(undefined)}/>}
           <Button size="small" variant="contained" onClick={() => navigate(-1)}>
             Go back
           </Button>

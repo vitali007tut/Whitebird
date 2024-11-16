@@ -24,6 +24,9 @@ export const content = {
   flexDirection: "column",
   rowGap: "20px",
 };
+export const actionButtons = {
+  padding: "10px 20px",
+};
 
 export const commentsContainer = {
   display: 'grid',
