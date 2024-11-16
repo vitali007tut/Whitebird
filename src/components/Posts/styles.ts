@@ -1,5 +1,7 @@
 export const title = {
   height: "30px",
+  display: "flex",
+  justifyContent: "space-between",
 };
 
 export const card = {
@@ -7,5 +9,4 @@ export const card = {
   padding: "5px 15px",
   marginBottom: "5px",
   borderRadius: "5px",
-//   width: "fit-content",
 };

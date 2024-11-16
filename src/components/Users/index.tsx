@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as sx from './styles';
+import * as sx from "./styles";
 import { Box, Button } from "@mui/material";
 
 type TUser = {
@@ -9,14 +9,12 @@ type TUser = {
 };
 
 type TProps = {
-    changeId: (id: string) => void;
-}
+  changeId: (id: string) => void;
+};
 
-export const Users = ({changeId}: TProps) => {
+export const Users = ({ changeId }: TProps) => {
   const [users, setUsers] = useState<TUser[]>([]);
-  const [activeId, setActiveIndex] = useState<string>('')
-//   const navigate = useNavigate();
-
+  const [activeId, setActiveIndex] = useState<string>("");
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -25,35 +23,46 @@ export const Users = ({changeId}: TProps) => {
   }, []);
 
   const handleActiveUser = (id: string) => {
-    setActiveIndex(id)
-    changeId(id)
-  }
+    setActiveIndex(id);
+    changeId(id);
+  };
 
   const handleShowAll = () => {
-    setActiveIndex('')
-    changeId('')
-  }
+    setActiveIndex("");
+    changeId("");
+  };
 
   return (
     <div>
-    <Box sx={sx.title}>
-      <div>Users list</div>
-      <div>
-      {activeId && <Button size="small" onClick={handleShowAll}>Show all posts</Button>}
-      </div>
-    </Box>
+      <Box sx={sx.title}>
+        <div>Users list</div>
+        <div>
+          {activeId && (
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              onClick={handleShowAll}
+            >
+              Show all posts
+            </Button>
+          )}
+        </div>
+      </Box>
       {!users.length && <div>Loading...</div>}
       <ul>
         {users.length !== 0 &&
-          users.map((user) => <Box 
-          sx={sx.card}
-          component={'div'}
-          key={user.id}
-          className={activeId === user.id ? 'active' : ''}
-          onClick={() => handleActiveUser(user.id)}
-          >
-            {user.username}
-        </Box>)}
+          users.map((user) => (
+            <Box
+              sx={sx.card}
+              component={"div"}
+              key={user.id}
+              className={activeId === user.id ? "active" : ""}
+              onClick={() => handleActiveUser(user.id)}
+            >
+              {user.username}
+            </Box>
+          ))}
       </ul>
     </div>
   );
