@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as sx from "./styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { addFavorite, getLikeArray, getLikeStatus, isFavorite, removeFavorite, setLike } from "../utils";
+import { addFavorite, getLikeStatus, isFavorite, removeFavorite, setLike } from "../utils";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';

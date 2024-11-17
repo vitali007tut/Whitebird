@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import * as sx from "./styles";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Tooltip, Zoom } from "@mui/material";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { useNavigate } from "react-router-dom";
 
 type TUser = {
   id: string;
@@ -15,6 +17,7 @@ type TProps = {
 export const Users = ({ changeId }: TProps) => {
   const [users, setUsers] = useState<TUser[]>([]);
   const [activeId, setActiveIndex] = useState<string>("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -61,6 +64,9 @@ export const Users = ({ changeId }: TProps) => {
               onClick={() => handleActiveUser(user.id)}
             >
               {user.username}
+              <Tooltip TransitionComponent={Zoom} title="Personal account" color="primary">
+                  <AccountBoxIcon onClick={() => navigate(`user/${user.id}`)} />
+              </Tooltip>
             </Box>
           ))}
       </ul>

@@ -41,11 +41,6 @@ export const setLike = ({postId, like}: TLike) => {
     localStorage.setItem('likes by posts', JSON.stringify(obj))
 }
 
-export const getLikeArray = (): TLike[] => {
-    const str = localStorage.getItem('likes by posts')
-    return JSON.parse(str??'[]')
-}
-
 export const getLikeStatus = (id: number, like: boolean): boolean => {
     const str = localStorage.getItem('likes by posts')
     const obj: TLike[] = JSON.parse(str??'[]')
