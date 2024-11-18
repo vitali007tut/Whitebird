@@ -1,6 +1,4 @@
-## [Deploy](https://jazzy-seahorse-2c7c6f.netlify.app/).
-
-## Steps
+## [Deploy](https://jazzy-seahorse-2c7c6f.netlify.app/)
 
 Clone repository
 
@@ -10,6 +8,6 @@ Install modules
 
 ### `npm i`
 
-To view it in the browser, run:
+To view it in the browser
 
 ### `npm run start`
