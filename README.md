@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-Deploy netlify [link](https://jazzy-seahorse-2c7c6f.netlify.app/).
+## [Deploy](https://jazzy-seahorse-2c7c6f.netlify.app/).
 
 ## Steps
 
